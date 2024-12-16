@@ -1,0 +1,36 @@
+﻿@model Employee_Management_Project.Employee
+@{
+    ViewBag.Title = "Login";
+}
+<style>
+    .btn-block {
+        display: block;
+        width: 6%;
+    }
+</style>
+
+<h2>Login Form</h2>
+@using (Html.BeginForm("Login", "Login", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-outline mb-4">
+        @Html.LabelFor(model => model.Emp_Email, "Email or username", new { @class = "form-label" })
+        @Html.TextBoxFor(model => model.Emp_Email, new { @class = "form-control", required = "required" })
+        @Html.ValidationMessageFor(model => model.Emp_Email, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-outline mb-4">
+        @Html.LabelFor(model => model.Password, "Password", new { @class = "form-label" })
+        @Html.PasswordFor(model => model.Password, new { @class = "form-control", required = "required" })
+        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-check mb-4">
+        <input class="form-check-input" type="checkbox" id="RememberMe" />
+        <label class="form-check-label" for="RememberMe">Remember me</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+}
+

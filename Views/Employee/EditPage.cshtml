@@ -1,0 +1,75 @@
+﻿
+@model Employee_Management_Project.Employee
+
+
+@{
+    ViewBag.Title = "EditPage";
+}
+
+<h2>EditPage</h2>
+
+@if (TempData["MessageUPdate"] != null)
+{
+    var messageType = TempData["MessageType"]?.ToString() ?? "info"; // Default to 'info' type
+
+    <div id="tempMessage" class="alert alert-@(messageType)" role="alert">
+        @TempData["MessageUPdate"]
+    </div>
+}
+
+
+@using (Html.BeginForm("Update", "Employee", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+    <input id="Id" name="Id" type="hidden" value="@Model.Id" />
+
+    <div>
+        <div>
+            <label for="EmployeeName">Employee Name</label>
+
+            @Html.TextBoxFor(model => model.Emp_Name, new { @class = "form-control", required = "required" })
+        </div>
+
+        <div>
+            <label for="Emailid">Employee Email</label>
+            @Html.TextBoxFor(model => model.Emp_Email, new { @class = "form-control", type = "email" })
+        </div>
+
+        <div>
+            <label for="Desigination">Employee Designation</label>
+            @Html.TextBoxFor(model => model.Emp_Designation, new { @class = "form-control" })
+        </div>
+
+        <div>
+            <label for="ContactNumber">Employee Contact</label>
+            @Html.TextBoxFor(model => model.Emp_MobileNo, new { @class = "form-control", type = "tel" })
+        </div>
+
+        <div>
+            <label for="Employee Address">Employee Address</label>
+            @Html.TextAreaFor(model => model.Emp_Address, new { @class = "form-control", rows = "4", cols = "50" })
+        </div>
+
+        <div>
+            <label for="EmployeeSalary">Employee Salary</label>
+            @Html.TextBoxFor(model => model.Emp_Salary, new { @class = "form-control", type = "text" })
+        </div>
+
+        <div>
+            <input type="submit" value="Update" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Hide the message after 5 seconds (5000 milliseconds)
+    setTimeout(function () {
+        //$("#tempMessage").fadeOut("slow");
+        if ($("#tempMessage").length) {
+            window.location.href = '@Url.Action("ViewPage", "Employee")';
+        }
+    }, 3000);
+</script>

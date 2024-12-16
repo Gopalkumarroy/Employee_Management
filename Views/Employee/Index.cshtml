@@ -1,0 +1,74 @@
+﻿@model Employee_Management_Project.Models.EmployeeModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@if (TempData["MessageUPdate"] != null)
+{
+    var messageType = TempData["MessageType"]?.ToString() ?? "info"; // Default to 'info' type
+
+    <div id="tempMessage" class="alert alert-@(messageType)" role="alert">
+        @TempData["MessageUPdate"]
+    </div>
+}
+
+
+@using (Html.BeginForm("Index", "Employee", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div>
+    <div>
+        <label for="EmployeeName">Employee Name</label>
+        @Html.TextBoxFor(model => model.Emp_Name, new { @class = "form-control", required = "required" })
+    </div>
+
+    <div>
+        <label for="password">Password</label>
+        @Html.TextBoxFor(model => model.Password, new { @class = "form-control", type = "password" })
+    </div>
+
+    <div>
+        <label for="Emailid">Employee Email</label>
+        @Html.TextBoxFor(model => model.Emp_Email, new { @class = "form-control", type = "email" })
+    </div>
+
+    <div>
+        <label for="Designation">Employee Designation</label>
+        @Html.TextBoxFor(model => model.Emp_Designation, new { @class = "form-control", required = "required" })
+    </div>
+
+    <div>
+        <label for="Employee ContactNumber">Employee Contact</label>
+        @Html.TextBoxFor(model => model.Emp_MobileNo, new { @class = "form-control", type = "tel" })
+    </div>
+
+    <div>
+        <label for="Employee Address">Employee Address</label>
+        @Html.TextAreaFor(model => model.Emp_Address, new { @class = "form-control", rows = "4", cols = "50" })
+    </div>
+
+    <div>
+        <label for="EmployeeSalary">Employee Salary</label>
+        @Html.TextBoxFor(model => model.Emp_Salary, new { @class = "form-control", type = "text" })
+    </div><br />
+
+    <div>
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+</div>
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Hide the message after 5 seconds (5000 milliseconds)
+        setTimeout(function () {
+            //$("#tempMessage").fadeOut("slow");
+            if ($("#tempMessage").length) {
+                window.location.href = '@Url.Action("Index", "Employee")';
+            }
+        }, 3000);
+    </script>

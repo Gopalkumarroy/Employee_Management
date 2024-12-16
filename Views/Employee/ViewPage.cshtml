@@ -1,0 +1,74 @@
+﻿
+@model Employee_Management_Project.Employee
+@{var snno = 1;}
+
+
+<html>
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <a href="@Url.Action("Logout", "Login")" class="btn btn-danger">Logout</a>
+
+    @if (TempData["Message"] != null)
+    {
+        var messageType = TempData["MessageType"]?.ToString() ?? "info"; // Default to 'info' type
+
+        <div id="tempMessage" class="alert alert-@(messageType)" role="alert">
+            @TempData["Message"]
+        </div>
+    }
+    @{ var username = Session["Username"]; }
+
+    <h1>Welcome, @username!</h1>
+
+    <table class="table" style="border:1px solid; background-color:gainsboro">
+        <thead>
+            <tr>
+                <th>Sn No</th>
+                <th> Employee Name</th>
+                <th>Employee Email</th>
+                <th> Employee ContactNo</th>
+                <th>Employee Address</th>
+                <th>Employee Designation</th>
+                <th>Employee Salary</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Employee in Model.Employees)
+            {
+
+                <tr>
+                    <td style="width:1%">@snno</td>
+                    <td style="width:15%">@Employee.Emp_Name</td>
+                    <td style="width:15%">@Employee.Emp_Email</td>
+                    <td style="width:15%">@Employee.Emp_MobileNo</td>
+                    <td style="width:15%">@Employee.Emp_Address</td>
+                    <td style="width:15%">@Employee.Emp_Designation</td>
+
+                    <td style="width:10%">@Employee.Emp_Salary</td>
+                    <td style="width:14%">
+                        <a href="@Url.Action("EditPage","Employee",new { Id = Employee.Id })"> <i class="fa fa-edit" style="font-size:20px;color:green"></i></a>
+                        <a href="@Url.Action("Delete","Employee",new { Id = Employee.Id })"><i class="fa fa-trash" style="font-size:20px;color:red"></i></a>
+                        <a href="@Url.Action("DetailPage","Employee",new { Id = Employee.Id })"><i class='fas fa-eye' style='font-size:20px;color:red'></i></a>
+                    </td>
+                </tr>
+                snno++;
+            }
+        </tbody>
+    </table>
+
+</body>
+
+</html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Hide the message after 5 seconds (5000 milliseconds)
+    setTimeout(function () {
+        $("#tempMessage").fadeOut("slow");
+    }, 1000);
+</script>
+
